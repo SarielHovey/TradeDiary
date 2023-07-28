@@ -4,7 +4,7 @@ import json
 from pprint import pprint
 
 class TradeLog:
-    def __init__(self, filepath:str="C:/Users/sarie/OneDrive/公务/交易日志.json") -> None:
+    def __init__(self, filepath:str="D:/TradeLog_2023.json") -> None:
         self.__filepath:str = filepath
 
         if os.path.exists(self.__filepath):
