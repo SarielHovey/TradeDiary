@@ -1,9 +1,16 @@
+import os
+import pathlib
 import json
 from pprint import pprint
 
 class TradeLog:
-    def __init__(self, filepath:str="D:/TradeLog_2023.json") -> None:
+    def __init__(self, filepath:str="C:/Users/sarie/OneDrive/公务/交易日志.json") -> None:
         self.__filepath:str = filepath
+
+        if os.path.exists(self.__filepath):
+            pass
+        else:
+            pathlib.Path(self.__filepath).touch(exist_ok=True)
 
         file = open(self.__filepath, encoding="utf-8", mode="r")
         self.__data:dict[str, list[dict[str, str]]] = json.load(file)
@@ -23,23 +30,23 @@ class TradeLog:
 
         return tmp
 
-    def head(self, symbol:str, index:int) -> None:
+    def head(self, symbol:str, index:int=6) -> None:
         """
         Print 1st-N records for symbol. Index better be <= 20
         """
         assert symbol in self.__data, f"一级索引{symbol}不存在, 请使用gen_symbol方法创建!"
         for it in self.__data[symbol][:index]:
-            pprint(it, indent=4, width=20, compact=False, sort_dicts=False)
+            pprint(it, indent=4, width=80, compact=False, sort_dicts=False)
 
         return
 
-    def tail(self, symbol:str, index:int) -> None:
+    def tail(self, symbol:str, index:int=6) -> None:
         """
         Print LAST 1st-N records for symbol. Index better be <= 20
         """
         assert symbol in self.__data, f"一级索引{symbol}不存在, 请使用gen_symbol方法创建!"
         for it in self.__data[symbol][-index:]:
-            pprint(it, indent=4, width=20, compact=False, sort_dicts=False)
+            pprint(it, indent=4, width=80, compact=False, sort_dicts=False)
 
         return
 
@@ -82,11 +89,10 @@ class TradeLog:
 
         return
 
-    def dump_log(self, filepath:str) -> None:
-        file = open(filepath, encoding="utf-8", mode="w")
+    def dump_log(self) -> None:
+        file = open(self.__filepath, encoding="utf-8", mode="w")
         json.dump(self.__data, file, ensure_ascii=False, indent=4, allow_nan=True)
         file.close()
         print("Trade Log extract with SUCCESS!")
 
         return
-
