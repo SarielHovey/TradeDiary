@@ -1,5 +1,5 @@
-# TradeDiary
-A trading diary tool
+# TradeLog
+A trading logging tool
 ## 描述
 个人自用的交易日志工具, 收盘后用于记录复盘的想法和对下个交易日的计划<br>
 没有多少技术含量, 过于落后, 方便开源<br>
