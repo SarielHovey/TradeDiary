@@ -7,7 +7,7 @@ A trading diary tool
 由于你赚了钱也不会分我, 所以本工具造成的任何问题, 本人概不负责<br>
 ## 使用环境要求
 首先, 需要`Python ver >= 3.9`<br>
-其次, 本工具完全基于Python内置包`json`; 如果`import json`发生错误, 建议反思一下Python按照是否正确<br>
+其次, 本工具完全基于Python内置包`json`; 如果`import json`发生错误, 建议反思一下Python安装是否正确<br>
 ## 数据结构
 本工具最终会输出并管理存放在本地的`json`文件, 文件结构如下:
 ```
