@@ -18,19 +18,19 @@ A trading logging tool
     "豆油": [
         {
             "dt": "2023-07-28 11:30:00+08:00",
-            "symbol": "DCE.y2309",
+            "ticker": "DCE.y2309",
             "desc": "XXXXXXXX"
         },
         {
             "dt": "2023-07-28 15:00:00+08:00",
-            "symbol": "DCE.y2309",
+            "ticker": "DCE.y2309",
             "desc": "XXXXXXXXX"
         }
     ],
     "工商银行A股": [
         {
             "dt": "2023-07-28 11:30:00+08:00",
-            "symbol": "SH.601398",
+            "ticker": "SH.601398",
             "desc": "XXXXXXXX"
         }
     ]
@@ -41,3 +41,22 @@ A trading logging tool
 考虑到txt格式的网络小说连载多年也是20MB顶天的大小, 难以想象会有逆天用户写出超过100MB的交易日志<br>
 如果发生, 建议你不要做单了, 改行去写网文吧<br>
 每年可以单独建立一个json日志, 加快索引速度<br>
+## 使用方法
+1. 读取Log文件<br>
+`tl = TradeLog("D:/sampleLog.json")`
+2. 查阅某标的最近的几条Log<br>
+`tl.tail("工商银行A股", 6)`
+3. 插入Log<br>
+```python
+dt = "2023-07-28 11:30:00+08:00"
+ticker = "SH.601398"
+desc = "我不炒股, 你看着办"
+tl.gen_log("工商银行A股", dt, ticker, desc)
+```
+4. 修改Log<br>
+```python
+tl.modify_log("工商银行A股", -1, dt, ticker, desc)
+```
+5. 保存Log<br>
+必须调用此方法才能最终写入文件. 建议在修改完确认后, 在结束工作前一次性写入<br>
+`tl.dump_log()`
