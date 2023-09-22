@@ -12,8 +12,13 @@ A trading logging tool
 首先, 需要`Python ver >= 3.9`<br>
 其次, 本工具完全基于Python内置包`json`和`pprint`; 如果`import`发生错误, 建议反思一下Python安装是否正确<br>
 ## 数据结构
-本工具最终会输出并管理存放在本地的`json`文件, 文件结构如下:
+本工具最终会输出并管理存放在本地的`json`文件, 文件结构为
+```python
+dict[str, list[dict[str, str]]]
 ```
+这对应了一级索引 -> 日志 -> 日志内容的三层结构
+具体示例如下:
+```python
 {
     "豆油": [
         {
@@ -35,6 +40,12 @@ A trading logging tool
         }
     ]
 }
+```
+很显然的, 一个日志包括3个必须的元素作为内容:
+```
+dt: 收盘时间戳, 在同一个日志文件内务必保持同样的格式
+ticker: 证券代码
+desc: 你写的东西
 ```
 ### 效能问题
 本工具会使用Python的`open()`函数将json文件整个读入内存<br>
@@ -59,4 +70,13 @@ tl.modify_log("工商银行A股", -1, dt, ticker, desc)
 ```
 5. 保存Log<br>
 必须调用此方法才能最终写入文件. 建议在修改完确认后, 在结束工作前一次性写入<br>
-`tl.dump_log()`
+```python
+tl.dump_log()
+```
+值得留意的是, `v1.1.0`版本增加了一些新的功能, 便于快速翻阅日志(比手写在纸上爽多了有没有)<br>
+6. 重新按照时间戳`dt`排序Log<br>
+```python
+# 如果出于各种原因, 你弄乱了工商银行A股的日志, 使用以下方法从过去到现在重新排序日志
+tl.sort("工商银行A股", reverse=False)
+```
+
