@@ -50,6 +50,29 @@ class TradeLog:
 
         return
 
+    def gen_dt(self, offset:int=0, tz:str="+08:00") -> str:
+        """
+        Generate dt used for self.gen_log() method
+        param->offset: int, if get prev period's dt, then use -1. default as 0
+        param->tz: str, GMT time offset to add to %Y-%m-%d %H:%M:%S string, e.g. "+08:00"
+        """
+        assert type(offset) is int and (offset <= 30 and offset >= -30)
+        assert type(tz) is str
+
+        otpt:str = ""
+        now:datetime.datetime = datetime.datetime.now()
+        if offset != 0:
+            now = now + datetime.timedelta(days=offset)
+        h:int = now.hour
+
+        if h >= 9 and h <= 20:
+            otpt = now.strftime("%Y-%m-%d 15:00:00") + tz
+        elif h >= 21:
+            otpt = now.strftime("%Y-%m-%d 23:00:00") + tz
+
+        print(f"dt generated: {otpt}")
+        return otpt
+    
     def gen_symbol(self, symbol:str) -> None:
         """
         Create symbol as 1st class index
